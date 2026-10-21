@@ -6,14 +6,31 @@
 //
 
 import SwiftUI
-
+import SwiftData
 struct ContentView: View {
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+
+        VStack(spacing: 20) {
+
+            Image(systemName: "leaf.fill")
+                .font(.system(size: 70))
+                .foregroundStyle(.green)
+
+            Text("TorreonVerde")
+                .font(.largeTitle)
+                .fontWeight(.bold)
+
+            Text("Tu ciudad, tu entorno, tu voz.")
+                .font(.headline)
+                .foregroundStyle(.secondary)
+
+            Text(
+                "Reporta problemas ambientales y ayuda a cuidar nuestra ciudad."
+            )
+            .multilineTextAlignment(.center)
+            .padding(.horizontal)
+
         }
         .padding()
     }
@@ -21,4 +38,9 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
+        .modelContainer(
+            for: Reporte.self,
+            inMemory: true
+        )
 }
+
