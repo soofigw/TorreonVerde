@@ -21,8 +21,8 @@ struct VistaInicio: View {
         reportes.count
     }
 
-    private var reportesPendientes: Int {
-        reportes.filter { $0.estado == "Pendiente" }.count
+    private var reportesEnProceso: Int {
+        reportes.filter { $0.estado == "En proceso" }.count
     }
 
     private var reportesResueltos: Int {
@@ -140,10 +140,10 @@ struct VistaInicio: View {
                         )
 
                         TarjetaEstadistica(
-                            titulo: "Pendientes",
-                            cantidad: reportesPendientes,
-                            icono: "clock.fill",
-                            color: ColoresApp.amarillo
+                            titulo: "En proceso",
+                            cantidad: reportesEnProceso,
+                            icono: "arrow.triangle.2.circlepath",
+                            color: ColoresApp.enProceso
                         )
 
                         TarjetaEstadistica(
