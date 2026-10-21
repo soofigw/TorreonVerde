@@ -6,33 +6,27 @@
 //
 
 import Foundation
+
 import SwiftUI
 import SwiftData
 
 struct VistaInicio: View {
 
-    // consulta reportes almacenados
     @Query(sort: \Reporte.fechaCreacion, order: .reverse)
     private var reportes: [Reporte]
 
-    // cambiar pestana
     @Binding var pestañaSeleccionada: Int
 
-    // estadisticas calculadas
     private var totalReportes: Int {
         reportes.count
     }
 
     private var reportesPendientes: Int {
-        reportes.filter {
-            $0.estado == "Pendiente"
-        }.count
+        reportes.filter { $0.estado == "Pendiente" }.count
     }
 
     private var reportesResueltos: Int {
-        reportes.filter {
-            $0.estado == "Resuelto"
-        }.count
+        reportes.filter { $0.estado == "Resuelto" }.count
     }
 
     var body: some View {
@@ -46,40 +40,43 @@ struct VistaInicio: View {
 
                     Image(systemName: "leaf.fill")
                         .font(.title2)
-                        .foregroundStyle(.green)
+                        .foregroundStyle(ColoresApp.verdeOscuro)
                         .padding(12)
-                        .background(
-                            Color.green.opacity(0.12)
-                        )
+                        .background(ColoresApp.crema)
                         .clipShape(
                             RoundedRectangle(cornerRadius: 12)
                         )
 
-                    VStack(alignment: .leading) {
+                    VStack(alignment: .leading, spacing: 4) {
 
                         Text("TorreonVerde")
                             .font(.title2)
                             .fontWeight(.bold)
+                            .foregroundStyle(ColoresApp.verdeOscuro)
 
                         Text("Cuidemos nuestra ciudad")
                             .font(.caption)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(ColoresApp.textoSecundario)
                     }
 
                     Spacer()
 
-                    Image(systemName: "mappin.circle.fill")
+                    Image(systemName: "sun.max.fill")
                         .font(.title2)
-                        .foregroundStyle(.green)
+                        .foregroundStyle(ColoresApp.amarillo)
                 }
 
-                // Tarjeta de bienvenida
+                // tarjeta principal
                 VStack(alignment: .leading, spacing: 16) {
 
-                    Text("BIENVENIDO A TORREONVERDE")
-                        .font(.caption)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(.white.opacity(0.8))
+                    HStack(spacing: 8) {
+                        Image(systemName: "leaf.fill")
+
+                        Text("BIENVENIDO A TORREONVERDE")
+                    }
+                    .font(.caption)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(ColoresApp.amarillo)
 
                     Text("Tu ciudad, tu entorno, tu voz.")
                         .font(.title)
@@ -103,8 +100,8 @@ struct VistaInicio: View {
                         .fontWeight(.semibold)
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(.white)
-                        .foregroundStyle(Color.green)
+                        .background(ColoresApp.amarillo)
+                        .foregroundStyle(ColoresApp.verdeOscuro)
                         .clipShape(
                             RoundedRectangle(cornerRadius: 12)
                         )
@@ -115,8 +112,8 @@ struct VistaInicio: View {
                 .background(
                     LinearGradient(
                         colors: [
-                            Color(red: 0.13, green: 0.42, blue: 0.26),
-                            Color(red: 0.20, green: 0.58, blue: 0.35)
+                            ColoresApp.verdeOscuro,
+                            ColoresApp.verdeNatural
                         ],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
@@ -126,11 +123,12 @@ struct VistaInicio: View {
                     RoundedRectangle(cornerRadius: 20)
                 )
 
-                // estadisticas
+                // resumen d reportes
                 VStack(alignment: .leading, spacing: 14) {
 
                     Text("Resumen de reportes")
                         .font(.headline)
+                        .foregroundStyle(ColoresApp.verdeOscuro)
 
                     HStack(spacing: 10) {
 
@@ -138,21 +136,21 @@ struct VistaInicio: View {
                             titulo: "Total",
                             cantidad: totalReportes,
                             icono: "doc.text.fill",
-                            color: .blue
+                            color: ColoresApp.verdeOscuro
                         )
 
                         TarjetaEstadistica(
                             titulo: "Pendientes",
                             cantidad: reportesPendientes,
                             icono: "clock.fill",
-                            color: .orange
+                            color: ColoresApp.amarillo
                         )
 
                         TarjetaEstadistica(
                             titulo: "Resueltos",
                             cantidad: reportesResueltos,
                             icono: "checkmark.circle.fill",
-                            color: .green
+                            color: ColoresApp.verdeNatural
                         )
                     }
                 }
@@ -164,6 +162,7 @@ struct VistaInicio: View {
 
                         Text("Reportes recientes")
                             .font(.headline)
+                            .foregroundStyle(ColoresApp.verdeOscuro)
 
                         Spacer()
 
@@ -171,44 +170,81 @@ struct VistaInicio: View {
                             pestañaSeleccionada = 1
                         }
                         .font(.subheadline)
-                        .foregroundStyle(.green)
+                        .foregroundStyle(ColoresApp.verdeNatural)
                     }
 
                     if reportes.isEmpty {
 
-                        ContentUnavailableView(
-                            "Aún no tienes reportes",
-                            systemImage: "leaf",
-                            description: Text(
+                        VStack(spacing: 12) {
+
+                            Image(systemName: "leaf.circle.fill")
+                                .font(.system(size: 48))
+                                .foregroundStyle(
+                                    ColoresApp.verdeNatural
+                                )
+
+                            Text("Aún no tienes reportes")
+                                .font(.headline)
+                                .foregroundStyle(
+                                    ColoresApp.verdeOscuro
+                                )
+
+                            Text(
                                 "Cuando registres un problema ambiental, aparecerá aquí."
                             )
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                            .multilineTextAlignment(.center)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(28)
+                        .background(.white)
+                        .clipShape(
+                            RoundedRectangle(cornerRadius: 18)
                         )
 
                     } else {
 
                         ForEach(reportes.prefix(3)) { reporte in
 
-                            VStack(alignment: .leading, spacing: 6) {
+                            VStack(alignment: .leading, spacing: 8) {
 
                                 Text(reporte.titulo)
                                     .font(.headline)
+                                    .foregroundStyle(
+                                        ColoresApp.verdeOscuro
+                                    )
 
-                                Text(reporte.ubicacion)
-                                    .font(.subheadline)
-                                    .foregroundStyle(.secondary)
+                                Label(
+                                    reporte.ubicacion,
+                                    systemImage: "mappin.circle"
+                                )
+                                .font(.subheadline)
+                                .foregroundStyle(.secondary)
 
                                 Text(reporte.estado)
                                     .font(.caption)
-                                    .foregroundStyle(.green)
+                                    .fontWeight(.semibold)
+                                    .foregroundStyle(
+                                        reporte.estado == "Resuelto"
+                                        ? ColoresApp.verdeNatural
+                                        : ColoresApp.verdeOscuro
+                                    )
+                                    .padding(.horizontal, 10)
+                                    .padding(.vertical, 5)
+                                    .background(
+                                        reporte.estado == "Resuelto"
+                                        ? ColoresApp.verdeNatural.opacity(0.12)
+                                        : ColoresApp.crema
+                                    )
+                                    .clipShape(Capsule())
                             }
                             .frame(
                                 maxWidth: .infinity,
                                 alignment: .leading
                             )
                             .padding()
-                            .background(
-                                Color(.secondarySystemGroupedBackground)
-                            )
+                            .background(.white)
                             .clipShape(
                                 RoundedRectangle(cornerRadius: 14)
                             )
@@ -218,7 +254,7 @@ struct VistaInicio: View {
             }
             .padding()
         }
-        .background(Color(.systemGroupedBackground))
+        .background(ColoresApp.fondo)
         .toolbar(.hidden, for: .navigationBar)
     }
 }

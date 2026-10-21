@@ -43,7 +43,7 @@ struct ContentView: View {
             }
             .tag(2)
         }
-        .tint(.green)
+        .tint(ColoresApp.verdeNatural)
     }
 }
 

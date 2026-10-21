@@ -6,6 +6,7 @@
 //
 
 import Foundation
+
 import SwiftUI
 
 struct TarjetaEstadistica: View {
@@ -25,11 +26,11 @@ struct TarjetaEstadistica: View {
 
             Text("\(cantidad)")
                 .font(.system(size: 28, weight: .bold))
-                .foregroundStyle(.primary)
+                .foregroundStyle(ColoresApp.verdeOscuro)
 
             Text(titulo)
                 .font(.caption)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(ColoresApp.textoSecundario)
                 .lineLimit(1)
                 .minimumScaleFactor(0.7)
 
@@ -37,11 +38,16 @@ struct TarjetaEstadistica: View {
         .frame(maxWidth: .infinity)
         .padding(.vertical, 18)
         .padding(.horizontal, 6)
-        .background(
-            Color(.secondarySystemGroupedBackground)
-        )
+        .background(.white)
         .clipShape(
             RoundedRectangle(cornerRadius: 16)
         )
+        .overlay {
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(
+                    ColoresApp.verdeNatural.opacity(0.12),
+                    lineWidth: 1
+                )
+        }
     }
 }
