@@ -7,32 +7,43 @@
 
 import SwiftUI
 import SwiftData
+
 struct ContentView: View {
+
+    // pestana seleccionada
+    @State private var pestañaSeleccionada = 0
 
     var body: some View {
 
-        VStack(spacing: 20) {
+        TabView(selection: $pestañaSeleccionada) {
 
-            Image(systemName: "leaf.fill")
-                .font(.system(size: 70))
-                .foregroundStyle(.green)
+            NavigationStack {
+                VistaInicio(
+                    pestañaSeleccionada: $pestañaSeleccionada
+                )
+            }
+            .tabItem {
+                Label("Inicio", systemImage: "house.fill")
+            }
+            .tag(0)
 
-            Text("TorreonVerde")
-                .font(.largeTitle)
-                .fontWeight(.bold)
+            NavigationStack {
+                VistaListaReportes()
+            }
+            .tabItem {
+                Label("Reportes", systemImage: "list.bullet")
+            }
+            .tag(1)
 
-            Text("Tu ciudad, tu entorno, tu voz.")
-                .font(.headline)
-                .foregroundStyle(.secondary)
-
-            Text(
-                "Reporta problemas ambientales y ayuda a cuidar nuestra ciudad."
-            )
-            .multilineTextAlignment(.center)
-            .padding(.horizontal)
-
+            NavigationStack {
+                VistaNuevoReporte()
+            }
+            .tabItem {
+                Label("Reportar", systemImage: "plus.circle.fill")
+            }
+            .tag(2)
         }
-        .padding()
+        .tint(.green)
     }
 }
 
@@ -43,4 +54,3 @@ struct ContentView: View {
             inMemory: true
         )
 }
-
