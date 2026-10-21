@@ -205,50 +205,20 @@ struct VistaInicio: View {
 
                     } else {
 
+                        
                         ForEach(reportes.prefix(3)) { reporte in
 
-                            VStack(alignment: .leading, spacing: 8) {
+                            NavigationLink {
 
-                                Text(reporte.titulo)
-                                    .font(.headline)
-                                    .foregroundStyle(
-                                        ColoresApp.verdeOscuro
-                                    )
+                                VistaDetalleReporte(reporte: reporte)
 
-                                Label(
-                                    reporte.ubicacion,
-                                    systemImage: "mappin.circle"
-                                )
-                                .font(.subheadline)
-                                .foregroundStyle(.secondary)
+                            } label: {
 
-                                Text(reporte.estado)
-                                    .font(.caption)
-                                    .fontWeight(.semibold)
-                                    .foregroundStyle(
-                                        reporte.estado == "Resuelto"
-                                        ? ColoresApp.verdeNatural
-                                        : ColoresApp.verdeOscuro
-                                    )
-                                    .padding(.horizontal, 10)
-                                    .padding(.vertical, 5)
-                                    .background(
-                                        reporte.estado == "Resuelto"
-                                        ? ColoresApp.verdeNatural.opacity(0.12)
-                                        : ColoresApp.crema
-                                    )
-                                    .clipShape(Capsule())
+                                TarjetaReporte(reporte: reporte)
                             }
-                            .frame(
-                                maxWidth: .infinity,
-                                alignment: .leading
-                            )
-                            .padding()
-                            .background(.white)
-                            .clipShape(
-                                RoundedRectangle(cornerRadius: 14)
-                            )
+                            .buttonStyle(.plain)
                         }
+
                     }
                 }
             }

@@ -8,28 +8,27 @@
 import Foundation
 import SwiftData
 
-// Modelo que representa un reporte ambiental
 @Model
 final class Reporte {
 
-    // Identificador único del reporte
+    // id unico del reporte
     var id: UUID
 
-    // Información general
+    // info general
     var titulo: String
     var categoria: String
     var descripcion: String
     var ubicacion: String
 
-    // Fotografía del problema ambiental
+    // foto del problema
     @Attribute(.externalStorage)
     var fotografia: Data?
 
-    // Seguimiento del reporte
+    // seguimiento reporte
     var estado: String
     var fechaCreacion: Date
 
-    // Inicializador para crear reportes
+    // init para crear reportes
     init(
         titulo: String,
         categoria: String,
@@ -44,7 +43,7 @@ final class Reporte {
         self.ubicacion = ubicacion
         self.fotografia = fotografia
 
-        // Todos los reportes comienzan pendientes
+        // todos los reportes comienzan en pendiente
         self.estado = "Pendiente"
         self.fechaCreacion = Date()
     }
